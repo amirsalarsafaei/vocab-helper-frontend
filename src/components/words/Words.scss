@@ -1,0 +1,70 @@
+// Variables
+$primary-color: #007bff;
+$primary-hover: #0056b3;
+$danger-color: #dc3545;
+$danger-hover: #c82333;
+$border-color: #eee;
+$text-gray: #666;
+
+.words-container {
+  padding: 20px;
+}
+
+.words-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+
+  input[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    flex: 1;
+  }
+
+  button {
+    padding: 8px 16px;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $primary-hover;
+    }
+  }
+}
+
+.word-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid $border-color;
+  gap: 10px;
+}
+
+.word-text {
+  flex: 1;
+  font-size: 16px;
+}
+
+.word-type {
+  color: $text-gray;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.remove-button {
+  padding: 4px 8px;
+  background-color: $danger-color;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $danger-hover;
+  }
+}
+
