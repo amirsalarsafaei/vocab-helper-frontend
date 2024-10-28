@@ -15,7 +15,7 @@ interface ApiError {
 class ApiClient {
 	private client: AxiosInstance;
 
-	constructor(baseURL: string = 'http://localhost:8001/api') {
+	constructor(baseURL: string = 'https://english.amirsalarsafaei.com/api') {
 		this.client = axios.create({
 			baseURL,
 			headers: {

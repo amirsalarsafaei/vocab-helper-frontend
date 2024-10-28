@@ -40,7 +40,7 @@ const SpellingMode = () => {
 	const audioRef = useRef<HTMLAudioElement | null>(null);
 	const dmp = new diff.diff_match_patch();
 
-	const { data: wordData, isPending, error, refetch } = useQuery<SpellingPractice>({
+	const { data: wordData, isPending, error, refetch, dataUpdatedAt } = useQuery<SpellingPractice>({
 		queryKey: ['spelling-practice'],
 		queryFn: async () => {
 			try {
@@ -97,7 +97,7 @@ const SpellingMode = () => {
 				}
 			};
 		}
-	}, [wordData]);
+	}, [wordData, dataUpdatedAt]);
 
 
 
