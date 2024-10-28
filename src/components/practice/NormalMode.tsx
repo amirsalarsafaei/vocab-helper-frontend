@@ -36,7 +36,7 @@ const NormalMode = () => {
 	const dmp = new diff.diff_match_patch();
 
 	const { data: wordData, isPending, isFetching, error, refetch } = useQuery<NormalPractice>({
-		queryKey: ['spelling-practice'],
+		queryKey: ['normal-practice'],
 		queryFn: async () => {
 			try {
 				const resp = await api.get<NormalPractice>(`/vocab/practice/normal/`);
@@ -44,7 +44,8 @@ const NormalMode = () => {
 			} catch (error) {
 				throw error;
 			}
-		}
+		},
+		refetchOnWindowFocus: false
 	});
 
 	const { mutate, isPending: isPendingSubmit } = useMutation({

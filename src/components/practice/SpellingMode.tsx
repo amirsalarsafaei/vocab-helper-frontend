@@ -49,7 +49,8 @@ const SpellingMode = () => {
 			} catch (error) {
 				throw error;
 			}
-		}
+		},
+		refetchOnWindowFocus: false,
 	});
 
 	const { mutate, isPending: isPendingSubmit } = useMutation({
