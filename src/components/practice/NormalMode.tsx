@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import * as diff from 'diff-match-patch';
-import api from '@/utils/api';
+import api, { ApiError }from '@/utils/api';
 import {
 	Box,
 	TextField,
@@ -33,6 +33,7 @@ const NormalMode = () => {
 	const [userAnswer, setUserAnswer] = useState('');
 	const [showResult, setShowResult] = useState(false);
 	const [result, setResult] = useState<NormalPracticeResult | null>(null);
+	const [noMoreWords, setNoMoreWords] = useState(false);
 	const dmp = new diff.diff_match_patch();
 
 	const { data: wordData, isPending, isFetching, error, refetch } = useQuery<NormalPractice>({
@@ -40,8 +41,16 @@ const NormalMode = () => {
 		queryFn: async () => {
 			try {
 				const resp = await api.get<NormalPractice>(`/vocab/practice/normal/`);
+				setNoMoreWords(false);
 				return resp.data;
 			} catch (error) {
+				if (error instanceof ApiError && error.isNotFound()) {
+					setNoMoreWords(true);
+					return {
+						word_id: 0,
+						prompt: ""
+					};
+				}
 				throw error;
 			}
 		},
@@ -113,6 +122,7 @@ const NormalMode = () => {
 	}, [showResult]);
 
 	if (isPending) return <Box display="flex" justifyContent="center"><CircularProgress /></Box>;
+	if (noMoreWords) return <Alert severity="info">No more words to practice!</Alert>;
 	if (error) return <Alert severity="error">Error loading word</Alert>;
 
 	return (

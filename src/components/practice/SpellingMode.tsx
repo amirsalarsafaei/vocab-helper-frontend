@@ -184,6 +184,7 @@ const SpellingMode = () => {
 						variant="outlined"
 						label="Your Answer"
 						autoComplete="off"
+						autoFocus
 						slotProps={{htmlInput:{
 							autoCapitalize: 'off',
 							autoCorrect: 'off',

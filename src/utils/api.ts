@@ -6,10 +6,30 @@ interface ApiResponse<T = any> {
 	statusText: string;
 }
 
-interface ApiError {
-	message: string;
+class ApiError extends Error {
 	status?: number;
 	code?: string;
+	data?: any;
+
+	constructor(message: string, status?: number, code?: string, data?: any) {
+		super(message);
+		this.name = 'ApiError';
+		this.status = status;
+		this.code = code;
+		this.data = data;
+	}
+
+	isUnauthorized(): boolean {
+		return this.status === 401;
+	}
+
+	isForbidden(): boolean {
+		return this.status === 403;
+	}
+
+	isNotFound(): boolean {
+		return this.status === 404;
+	}
 }
 
 class ApiClient {
@@ -48,11 +68,12 @@ class ApiClient {
 		this.client.interceptors.response.use(
 			(response) => response,
 			(error) => {
-				const apiError: ApiError = {
-					message: error.response?.data?.detail || 'An error occurred',
-					status: error.response?.status,
-					code: error.response?.data?.code,
-				};
+				const apiError = new ApiError(
+					error.response?.data?.detail || error.message || 'An error occurred',
+					error.response?.status,
+					error.response?.data?.code,
+					error.response?.data
+				);
 				return Promise.reject(apiError);
 			}
 		);
@@ -124,5 +145,5 @@ class ApiClient {
 const api = new ApiClient();
 export default api;
 
-export { ApiClient };
+export { ApiClient, ApiError };
 
